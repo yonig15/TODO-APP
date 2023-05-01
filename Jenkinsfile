@@ -9,8 +9,8 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                sh 'docker-compose build'
-                sh 'docker-compose run --rm web npm test'
+                sh 'sudo docker-compose build'
+                sh 'sudo docker-compose run --rm web npm test'
             }
         }
         stage('Build and Push to Docker Hub'){

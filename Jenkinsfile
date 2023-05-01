@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                sh 'docker-compose build'
+                //sh 'docker-compose build'
                 sh 'docker-compose run --rm web npm test'
             }
         }

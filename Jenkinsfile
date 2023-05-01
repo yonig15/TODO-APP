@@ -13,17 +13,12 @@ pipeline {
                 sh 'docker-compose run --rm web npm test'
             }
         }
-        stage('Build and Push to Docker Hub') {
-            steps {
-                sh 'docker build -t yonig15/yoniapp .'
-                sh 'docker push yonig15/yoniapp'
-            }
-        }
-        stage('Push'){
+        stage('Build and Push to Docker Hub'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerCredntials', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         	    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                sh 'docker push trainwithshubham/node-todo-test:latest'
+                sh 'docker build -t yonig15/yoniapp .'
+                sh 'docker push yonig15/yoniapp'
                 }
             }
         }

@@ -23,10 +23,23 @@ pipeline {
         }
         stage('Deploy to EC2') {
         steps {
-            sshagent(credentials: ['ssh-key']) {
-            sh 'ssh ec2-user@your-ec2-instance "cd /path/to/app && docker-compose down && docker-compose pull && docker-compose up -d"'
+            sshagent(credentials: ['finel_exzem']) {
+            sh 'ssh ec2-16-16-144-83.eu-north-1.compute.amazonaws.com "cd /path/to/app && docker-compose down && docker-compose pull && docker-compose up -d"'
             }
         }
+        }
+        stage('Check') {
+            steps {
+            sh 'curl http://localhost:8000/health'
+            }
+        }
+    }
+    post {
+        success {
+            slackSend(color: 'good', message: "Build succeeded!\n\n*Commit:* ${env.GIT_COMMIT}\n*Branch:* ${env.BRANCH_NAME}\n*Build URL:* ${env.BUILD_URL}")
+        }
+        failure {
+            slackSend(color: 'danger', message: "Build failed!\n\n*Commit:* ${env.GIT_COMMIT}\n*Branch:* ${env.BRANCH_NAME}\n*Build URL:* ${env.BUILD_URL}")
         }
     }
 }

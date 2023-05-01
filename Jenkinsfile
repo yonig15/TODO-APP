@@ -1,6 +1,10 @@
 pipeline {
-     agent any
-    
+    agent {
+        docker {
+                image 'node:lts'
+                args '-u root:root -v /var/run/docker.sock:/var/run/docker.sock'
+            }
+    }
     stages{
         stage('Clone'){
             steps{
@@ -9,7 +13,7 @@ pipeline {
         }
         stage('Build and Test') {
             steps {
-                //sh 'docker-compose build'
+                sh 'docker-compose build'
                 sh 'docker-compose run --rm web npm test'
             }
         }

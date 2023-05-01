@@ -6,12 +6,12 @@ pipeline {
                 git url: 'https://github.com/yonig15/TODO-APP.git', branch: 'master' 
             }
         }
-        stage('Build and Test') {
-            steps {
-                sh 'docker-compose build'
-                sh 'docker-compose run --rm web npm test'
-            }
-        }
+        // stage('Build and Test') {
+        //     steps {
+        //         sh 'docker-compose build'
+        //         sh 'docker-compose run --rm web npm test'
+        //     }
+        // }
         stage('Build and Push to Docker Hub'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerCredntials', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {

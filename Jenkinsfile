@@ -12,6 +12,17 @@ pipeline {
                 sh 'docker-compose run --rm web npm test'
             }
         }
+        // stage('Run Security Scans') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('https://registry.hub.docker.com/', 'docker-hub-credentials') {
+        //                 withCredentials([usernamePassword(credentialsId: '<YOUR_AQUA_CREDENTIAL_ID>', usernameVariable: 'AQUA_USER', passwordVariable: 'AQUA_PASS')]) {
+        //                     sh "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e AQUA_USER=${AQUA_USER} -e AQUA_PASS=${AQUA_PASS} aquasec/cli:6.2 scan --local --registry registry.hub.docker.com --repo ${DOCKER_IMAGE}"
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         stage('Build and Push to Docker Hub'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerCredntials', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {

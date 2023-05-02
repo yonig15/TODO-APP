@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm install --production
 
+RUN npm install --save-dev mocha
+
 COPY . .
 
 RUN npm test

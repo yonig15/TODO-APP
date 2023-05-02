@@ -8,7 +8,7 @@ RUN npm install --production
 
 COPY . .
 
-RUN npm run test
+RUN npm test
 
 EXPOSE 8000
 
